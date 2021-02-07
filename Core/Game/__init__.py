@@ -16,6 +16,21 @@ def calculate_points(entity):
     suits = ["King", "Queen", "Jack", "Ace"]
 
     entity_points = 0
+    cards = []
+
+    for i in entity.cards:
+        cards.append(i.number)
+
+    if cards.count("Ace") >= 2:
+        for i in entity.cards:
+            try:
+                entity_points += int(i.number)
+            except ValueError:
+                if i.number in suits and i.number != "Ace":
+                    entity_points += 10
+                elif i.number == "Ace":
+                    entity_points += 1
+        return entity_points
 
     for i in entity.cards:
         try:
@@ -28,7 +43,7 @@ def calculate_points(entity):
                     entity_points += 1
                 else:
                     entity_points += 11
-    return entity_points
+        return entity_points
 
 
 def check_for_winner(player, dealer, end_of_turns=False):
